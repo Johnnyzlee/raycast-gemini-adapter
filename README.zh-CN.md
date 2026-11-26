@@ -52,7 +52,7 @@ cp settings.example.json settings.json
 
 如果 macOS 默认 `python3` 低于 3.11，可先执行 `brew install python@3.14`，再用 `python3.14 -m venv .venv` 创建环境。服务启动时会检查解释器版本。
 
-仓库处于私有状态期间，需要获授权的 GitHub 账号，或使用作者提供的源码压缩包。把项目放在长期保留的位置，登录服务会引用它的绝对路径。
+把项目放在长期保留的位置，登录服务会引用它的绝对路径。也可在 GitHub 使用 **Code → Download ZIP** 下载源码，再完成环境与配置步骤。
 
 使用**本地视频**时，安装提供 `ffprobe` 的 ffmpeg：
 

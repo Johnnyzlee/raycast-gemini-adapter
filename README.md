@@ -52,7 +52,7 @@ cp settings.example.json settings.json
 
 If macOS `python3` is older than 3.11, run `brew install python@3.14` and create the environment with `python3.14 -m venv .venv`. The service checks its interpreter version at startup.
 
-While this repository is private, clone with an account granted access, or use an owner-provided source archive. Keep the checkout in a permanent location: the login service uses its absolute path.
+Keep the checkout in a permanent location: the login service uses its absolute path. You can also use **Code → Download ZIP** on GitHub, then follow the environment and configuration steps.
 
 For **local video files**, install ffmpeg, which provides the `ffprobe` container inspector:
 
