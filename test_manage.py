@@ -9,7 +9,7 @@ from configuration import load_settings
 class ManageTests(unittest.TestCase):
  def setUp(self):
   self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup);self.root=Path(self.tmp.name)
-  self.settings=load_settings();self.settings.update(providers_file=str(self.root/'providers.yaml'),state_dir=str(self.root/'state'),service_label='local.gemini.test',launchagents_dir=str(self.root/'agents'),port=28767)
+  self.settings=load_settings(manage.ROOT/'settings.example.json');self.settings.update(providers_file=str(self.root/'providers.yaml'),state_dir=str(self.root/'state'),service_label='local.gemini.test',launchagents_dir=str(self.root/'agents'),port=28767)
   self.settings_path=self.root/'settings.json';self.settings_path.write_text(json.dumps(self.settings))
   self.provider=self.root/'providers.yaml';self.text=(manage.ROOT/'examples/providers.with-deepseek.example.yaml').read_text().replace('YOUR_GOOGLE_API_KEY','local-test-key')
   self.provider.write_text(self.text);self.addCleanup(manage.configure);manage.configure(self.settings_path)
