@@ -4,6 +4,8 @@
 
 The response footer totals usage returned by each main generation and separate video, Maps or Python call. A Raycast tool handoff continues the same task; a new user follow-up starts a new task total. Output includes thinking tokens. Tool-use tokens are reconciled against total usage to avoid counting them twice.
 
+A resumed video task keeps previously incurred usage once and separately reports new generation calls. Reading a saved result adds no token usage. Usage received before a later failure is retained; a failed call without returned usage remains unknown.
+
 ## Price book
 
 Checked **2026-11-26** against [Google's official pricing](https://aistudio.google.com/docs/pricing). USD per million tokens, Standard tier:

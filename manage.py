@@ -167,7 +167,7 @@ def main():
                 if args.command=='cleanup-video-files':print(json.dumps(VideoTools(SETTINGS,state,configured_key(SETTINGS)).cleanup(True)))
                 else:
                     with state.lock:
-                        for table in ('histories','history_metadata','pending_aliases','presentations'):state.db.execute('DELETE FROM '+table)
+                        for table in ('histories','history_metadata','pending_aliases','presentations','recovery_checkpoints'):state.db.execute('DELETE FROM '+table)
                         state.db.commit()
                     print('Conversation checkpoints and source pages cleared. Video-upload records preserved.')
             finally:state.db.close()

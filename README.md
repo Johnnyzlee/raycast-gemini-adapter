@@ -30,7 +30,7 @@ The adapter combines Google Search, webpage reading, Maps, visual file inputs an
 | **Cloud Python** | Google's code execution runs the calculation; document-based calculations use a separate call with the relevant data |
 | **Video** | Public YouTube, HTTPS video-file URLs and local absolute paths use native video input; static processing supports ranges and timestamps |
 | **Raycast tools** | The functions declared by Raycast remain available; Raycast executes them and sends the results back |
-| **Follow-ups and citations** | Stored native context, stable source IDs and Google citation metadata survive tool handoffs; historical sources are labelled separately |
+| **Follow-ups and citations** | Stored native context and source metadata survive handoffs; compact numbered citations stay consistent on follow-ups |
 | **Usage** | Actual returned usage is summed across main and child calls, with dated token-cost estimates |
 
 Supported model IDs: `gemini-4-carbon`, `gemini-4-neon`, `gemini-4-hydrogen`. Each has passed a native local-video API check. Neon received the broader mixed-tool, clipping and follow-up tests. Model switching preserves recoverable material while removing the previous model's signatures. See [validation](docs/VALIDATION.md) for the tested combinations and the distinction between API, offline and UI checks.
@@ -106,9 +106,15 @@ Video normally uses static processing: low resolution, 1 FPS, frames and audio. 
 
 ### How sources appear
 
-Google's exact, uniquely matched support segments receive nearby citations. Other verified sources appear in a labelled list. Follow-ups select relevant historical source IDs instead of appending the whole chat's catalog. Files use their actual names; timestamps come from video analysis.
+Sources appear one per line, with a short clickable label such as **新华网：官方公布的数据** and a matching `[1]` reference. Labels use acquired titles or snippets; when Google returns only a domain, the adapter shows a recognized website name or the original domain. It adds no invented article summary. Internal source IDs stay in the local ledger. Follow-ups retain numbering and select relevant earlier sources. Files keep their actual names.
+
+Ordinary answers stream as Google produces text. Known references are converted incrementally; source metadata arriving at the end appears in the final list. JSON mode waits for a complete valid object.
 
 Tool markers distinguish success, failure and partial results. A Raycast result is marked as returned unless its payload contains an explicit error. Search suggestions remain available after handoffs: chat shows their links, and **“official original display”** opens Google's original HTML/CSS on a temporary local page. Raycast's Markdown view displays links; the original widget opens in its local page.
+
+### Resume a completed video analysis
+
+After a successful video analysis, the adapter saves its result before generating the final answer. If that answer fails, an identical request in the same identified conversation resumes the saved tool results. With clients that omit a conversation ID, copy the returned `继续恢复 <code>` message to resume explicitly. Recovery lasts up to three days and survives service restarts. Changed videos, questions, settings or models require fresh analysis; asking to reanalyze also starts a new call. See [recovery details](docs/ARCHITECTURE.md#video-result-recovery).
 
 ## Architecture
 

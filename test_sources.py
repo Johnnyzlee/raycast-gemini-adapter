@@ -32,7 +32,7 @@ class LedgerTests(unittest.TestCase):
   l=Ledger();g={'groundingChunks':[{'web':{'title':'A','uri':'https://example.com/a'}},{'web':{'title':'A','uri':'https://example.com/a'}}], 'groundingSupports':[{'segment':{'text':'Fact A.'},'groundingChunkIndices':[0,1]}]}
   out=l.native([],g,{},'Fact A. Unrelated conclusion.')
   ident=sid('url','https://example.com/a')
-  self.assertEqual(out.count('['+ident+']'),1)
+  self.assertEqual(out.count('[1]'),1);self.assertNotIn(ident,out)
   self.assertTrue(out.startswith('Fact A. ['))
   self.assertEqual(len(l.data['records']),1)
   self.assertIn('无效',l.render_refs('[S000000000000]'))
@@ -40,7 +40,7 @@ class LedgerTests(unittest.TestCase):
   l=Ledger();a=l.source('search','A','https://example.com/a');b=l.source('search','B','https://example.com/b')
   l.event('Google 搜索','success',[a,b]);saved=l.save()
   follow=Ledger(saved);follow.render_refs('Use ['+a+']')
-  footer=follow.footer();self.assertIn('沿用历史',footer);self.assertNotIn('本次工具',footer);self.assertNotIn('example.com/b',footer)
+  footer=follow.footer();self.assertIn('来源：',footer);self.assertNotIn('本次工具',footer);self.assertNotIn('example.com/b',footer)
   c=follow.source('web','C','https://example.com/c');follow.event('网页读取','success',[c])
   self.assertIn('example.com/a',follow.footer());self.assertIn('example.com/c',follow.footer())
  def test_failure_is_not_success(self):

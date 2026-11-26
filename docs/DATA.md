@@ -49,6 +49,7 @@ Static `start` / `end` offsets select the requested interval. Uploading a local 
 ## Retention and cleanup
 
 - **History:** three days since a checkpoint was updated; at most 100 checkpoints. The cumulative native-payload budget is about 256 MiB, retaining the newest checkpoint. SQLite may retain allocated space for reuse. Newer snapshots can contain older conversation content.
+- **Video-result recovery:** separate durable checkpoints, fixed three-day expiry, at most 100 records and about 64 MiB cumulative payload (newest record retained). They contain completed analysis results, native context, sources and usage. `clear-history` removes these too.
 - **Source events:** three days per event, at most 160 retained. Reads/saves apply expiry and pruning.
 - **Uploaded video:** Google normally expires Files API objects after 48 hours. Metadata is rechecked before reuse; without an explicit expiry, the local reference uses a conservative 47-hour window. At most 50 active cached upload records per account.
 - **Background interactions:** cancellation is attempted on failure/timeout; deletion is requested after completion. A cleanup failure is included in the tool result. Files remain separately reusable until expiry or cleanup.

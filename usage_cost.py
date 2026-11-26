@@ -51,4 +51,11 @@ def footer(ledger,date):
     if any('不完整' in x for x in unknown):estimate+='（只含可估算调用）'
     suffix='；'+'；'.join(dict.fromkeys(unknown)) if unknown else ''
     if unreported:suffix+='；%d 个调用未返回用量，不按零费用处理'%unreported
-    return ('\n\n> 本任务已返回的 API 用量（含适配器子调用）：输入 %d，输出含思考 %d，总计 %d tokens。Tokens 估算 %s；搜索/Maps 等工具收费及未返回的计费项未知、未计入，不是真实账单%s。价格核对：2026-11-26。'%(inp,out,total,estimate,suffix))
+    if any('_failed' in e['kind'] and e['normalized']['reported'] for e in entries):suffix+='；失败调用仅计已返回用量，未返回部分未知'
+    recovered=set(ledger.data.get('recovered_usage_ids',[]))
+    split=''
+    if recovered:
+        old=sum(e['normalized']['total_tokens'] for e in entries if e['id'] in recovered)
+        new=sum(e['normalized']['total_tokens'] for e in entries if e['id'] not in recovered)
+        split='\n\n> 恢复前已发生用量 %d tokens；本次恢复新调用 %d tokens。读取检查点不产生 API token；失败调用缺失的用量仍未知。'%(old,new)
+    return split+('\n\n> 本任务已返回的 API 用量（含适配器子调用）：输入 %d，输出含思考 %d，总计 %d tokens。Tokens 估算 %s；搜索/Maps 等工具收费及未返回的计费项未知、未计入，不是真实账单%s。价格核对：2026-11-26。'%(inp,out,total,estimate,suffix))

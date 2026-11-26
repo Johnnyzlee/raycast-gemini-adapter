@@ -335,7 +335,7 @@ class VideoTools:
         identity=(info.get('hash') or public)+'|'+str(start)+'|'+str(end)+'|'+mode+'|'+detail
         ident=ledger.source('video',title,public,identity=identity,original_source=source,mode=mode,
             layers=['frames','audio'] if mode=='static' else ['按需，实际载入层以返回记录为准'],
-            range={'start_seconds':start or 0,'end_seconds':end},expires=expires)
+            range={'start_seconds':start or 0,'end_seconds':end},expires=expires,content_hash=info.get('hash'))
         ledger.event('视频原生分析','success',[ident],input_kind=kind,mode=mode,model=model,video_input_verified=True,
                      has_audio=info.get('has_audio'),upload_reused=reused,validation=validation,cleanup_warnings=result.get('adapter_cleanup_warnings',[]))
         # Keep only execution types, usage and final answer; no opaque thought

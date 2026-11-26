@@ -24,7 +24,7 @@ class ExtendedSources(unittest.TestCase):
   self.assertNotEqual(x,y);self.assertEqual(l.data['records'][x]['range'],{'start':1})
  def test_source_expiry_linked_history_and_attachments(self):
   l=Ledger();i=l.source('search','A','https://a.test');l.event('Google 搜索','success',[i]);p=l.save()
-  follow=Ledger(p);self.assertIn('https://a.test',follow.render_refs('['+i+'](https://fake.test)'));self.assertIn('沿用历史',follow.footer())
+  follow=Ledger(p);self.assertIn('https://a.test',follow.render_refs('['+i+'](https://fake.test)'));self.assertIn('来源：',follow.footer())
   p['events'][0]['at']=time.time()-4*86400;self.assertFalse(Ledger(p).data['records'])
   with tempfile.TemporaryDirectory() as tmp:
    convert_messages([{'role':'user','content':[{'type':'file','file':{'filename':'test.pdf','file_data':base64.b64encode(b'fixture').decode()}}]}],FileTools({'allowed_roots':[tmp]}),ledger=l)
@@ -47,4 +47,4 @@ class ExtendedSources(unittest.TestCase):
  def test_historical_grounding_is_not_new_tool_execution(self):
   l=Ledger();i=l.source('search','A','https://a.test');l.event('Google 搜索','success',[i])
   follow=Ledger(l.save());follow.native([],{'groundingChunks':[{'web':{'title':'A','uri':'https://a.test'}}]}, {},'Use existing source.')
-  self.assertIn('沿用历史',follow.footer());self.assertNotIn('本次工具',follow.footer())
+  self.assertIn('来源：',follow.footer());self.assertNotIn('本次工具',follow.footer())

@@ -29,8 +29,11 @@ test-fixtures/shapes.png
 test-fixtures/verification.docx
 test-fixtures/verification.pdf
 test_adapter.py
+test_comprehensive_audit.py
 test_followup_compat.py
 test_manage.py
+test_retry_stream.py
+test_source_display.py
 test_sources.py
 test_sources_extended.py
 test_video.py

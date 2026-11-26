@@ -48,3 +48,14 @@ class ManageTests(unittest.TestCase):
   text=self.provider.read_text().replace(manage.BASE,'https://other.example');self.provider.write_text(text)
   with self.assertRaises(ValueError):manage.rollback()
   self.assertEqual(self.provider.read_text(),text);self.assertTrue(manage.PLIST.exists())
+
+ def test_clear_history_removes_recovery_without_changing_provider(self):
+  from adapter import State
+  state=State(Path(self.settings['state_dir']))
+  state.remember_checkpoint('request','scope',{'expires':9999999999,'history':[]})
+  state.db.close()
+  with patch('sys.argv',['manage.py','clear-history','--settings',str(self.settings_path)]):manage.main()
+  state=State(Path(self.settings['state_dir']))
+  try:self.assertEqual(state.db.execute('SELECT COUNT(*) FROM recovery_checkpoints').fetchone()[0],0)
+  finally:state.db.close()
+  self.assertEqual(self.provider.read_text(),self.text)

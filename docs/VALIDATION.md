@@ -4,9 +4,11 @@ Date: **2026-11-26**. [English README](../README.md) · [中文说明](../README
 
 ## Offline regression
 
-The publication checkout passes **58 offline tests** on the local Python 3.14 environment. CI runs the same suite on Python 3.11 and 3.14. No real key or API is needed for this suite.
+The publication checkout passes **105 offline tests** on the local Python 3.14 environment. CI runs the same suite on Python 3.11 and 3.14. No real key or API is needed for this suite.
 
 Coverage includes SSE success/error envelopes, null and empty message forms, parallel and sequential tool responses, source handoff and recovery, stream source-index remapping, historical versus new sources, model switching, credential/conversation scope, legacy/expired state, file authorization, upload reuse, private-address/redirect rejection, processing failure, cancellation, unknown usage, dated estimates, installer failure/concurrent-edit handling, service ownership and rollback preserving unrelated providers.
+
+New deterministic tests cover video success followed by final-answer failure, restart recovery, credential/session/model/settings isolation, expiry, explicit reanalysis, concurrent retries and partial-failure usage. Streaming tests assert that the first visible chunk arrives before the fake upstream finishes, plus split markers/links/Unicode, late sources, cancellation, JSON and non-streaming responses. Source-display tests cover publisher-only metadata, acquired summaries, stable numbers and preservation of richer titles.
 
 ## Native API baseline
 
@@ -37,6 +39,12 @@ Through that installed test endpoint, Hydrogen executed cloud Python (17 + 25 = 
 
 The publication checkout also passed a fresh Hydrogen native-video test using its own generated color-card/tone fixture. It recognized the colors and screen values; native video invocation and returned usage were verified. Its registered upload was deleted after the test. Python 3.11+ is now checked at startup; installation acceptance uses Python 3.14.
 
+The latest staged publication was exported into a clean directory, installed in a new Python 3.14 virtual environment, and passed all **105 tests**, the install dry run and an actual HTTP health check on a separate ephemeral port. No production configuration or service was changed.
+
+## Latest runtime regression
+
+The running adapter also passed representative real HTTP/SSE checks after these fixes: Hydrogen JSON plus Python, Carbon image input, Neon PDF plus Python, Hydrogen Maps plus webpage, and Neon Search → synthetic Raycast tool result → final answer. Search follow-ups retained numeric references without another search; domain-only results showed the known publisher name. A synthetic video summary and follow-up completed without a second video analysis. These are API checks; actual Raycast UI rendering was not exercised.
+
 ## Boundaries observed
 
 - Google requests occasionally exceeded the bounded socket timeout. Explicit test retries succeeded; the adapter returned readable SSE errors for failed attempts. It does not automatically repeat billable generation calls.
@@ -44,7 +52,7 @@ The publication checkout also passed a fresh Hydrogen native-video test using it
 - With fake-IP proxy DNS, local fetching was skipped and Google performed direct-URL validation; this behavior is recorded in the tool result.
 - File expiration, timeout, invalid formats/sizes and processing failure have deterministic offline coverage. No test waits 48 hours for real expiry.
 - Raycast UI access timed out during the runtime's previous acceptance. Interface tests establish HTTP/SSE behavior, not Raycast rendering. README/browser preview checks are separate from AI Chat UI checks.
-- Without a stable client conversation ID, identical visible prefixes under the same credential share the same recovery key.
+- Ordinary historical-prefix recovery cannot distinguish identical transcripts under the same credential without a client conversation ID. Failed-video recovery adds a stricter boundary: automatic retry requires an ID; clients without one must provide the explicit recovery code.
 
 ## Reproduce a paid check
 
