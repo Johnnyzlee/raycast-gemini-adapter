@@ -44,7 +44,7 @@ File sources use actual file names. Python is execution evidence. Raycast result
 
 A same-task external-tool continuation restores its task, sources and usage. A new user question starts a new task, with historical sources available for relevant citations. Sources not selected for the answer stay out of the historical footer.
 
-Switching among the three supported models restores native content and sources from the longest matching checkpoint. Opaque signatures from another model are removed; old tool results become historical material rather than executable calls.
+Switching among the three supported models restores native content and sources from the longest matching checkpoint. Opaque signatures from another model are removed; old tool results are restored as historical material.
 
 If the client omits `conversation_id`, state is bound to the visible transcript prefix and tool IDs/arguments. Two identical prefixes under the same credential cannot be separated. Missing or expired native tool context produces a readable request to start a fresh chat and reload the material.
 

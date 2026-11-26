@@ -4,7 +4,7 @@ Date: **2026-11-26**. [English README](../README.md) · [中文说明](../README
 
 ## Offline regression
 
-The publication checkout passes **57 offline tests** on the local Python 3.14 environment. CI runs the same suite on Python 3.11 and 3.14. No real key or API is needed for this suite.
+The publication checkout passes **58 offline tests** on the local Python 3.14 environment. CI runs the same suite on Python 3.11 and 3.14. No real key or API is needed for this suite.
 
 Coverage includes SSE success/error envelopes, null and empty message forms, parallel and sequential tool responses, source handoff and recovery, stream source-index remapping, historical versus new sources, model switching, credential/conversation scope, legacy/expired state, file authorization, upload reuse, private-address/redirect rejection, processing failure, cancellation, unknown usage, dated estimates, installer failure/concurrent-edit handling, service ownership and rollback preserving unrelated providers.
 
@@ -31,7 +31,11 @@ The original static fixture included generated colors/text and spoken audio. To 
 
 The portable installer adds configurable provider/config paths, service identity and ffprobe discovery. Its offline checks cover dry runs, occupied/existing installations, foreign checkout ownership, startup failures and endpoint rollback.
 
-A separate source checkout, virtual environment, test provider file, temporary state, port and LaunchAgent identity are used for the local installation acceptance. Public-checkout API results and the completed installation record are appended after execution; private responses, credentials and machine-specific paths stay outside Git.
+A fresh local clone and virtual environment passed all 58 tests and the documented install dry run, installation, health/status check, stop, start, restart and rollback, using a separate provider file, temporary state, ephemeral port and distinct LaunchAgent identity. Rollback restored the complete test provider file byte-for-byte, including the unchanged DeepSeek example.
+
+Through that installed test endpoint, Hydrogen executed cloud Python (17 + 25 = 42), then answered a follow-up (42 − 2 = 40). Stored metadata confirmed an actual successful execution. Existing production Gemini and DeepSeek services were left running. Private responses, credentials and machine-specific paths stay outside Git.
+
+The publication checkout also passed a fresh Hydrogen native-video test using its own generated color-card/tone fixture. It recognized the colors and screen values; native video invocation and returned usage were verified. Its registered upload was deleted after the test. Python 3.11+ is now checked at startup; installation acceptance uses Python 3.14.
 
 ## Boundaries observed
 

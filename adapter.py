@@ -1,6 +1,10 @@
 """Loopback OpenAI chat -> Gemini native tools bridge. Never log credentials/content."""
 from __future__ import annotations
 
+import sys
+if sys.version_info < (3,11):
+    raise SystemExit("Python 3.11+ is required. Create .venv with a supported interpreter, such as python3.14.")
+
 import argparse
 import base64
 import copy

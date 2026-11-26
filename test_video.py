@@ -143,3 +143,12 @@ class VideoEdgeCases(unittest.TestCase):
   resp.status=302;headers['Location']='https://localhost/private.mp4';conn.getresponse.side_effect=None
   with patch('video_tools.socket.getaddrinfo',return_value=[(2,1,6,'',('93.184.216.34',443))]),patch('video_tools.http.client.HTTPSConnection',return_value=conn),patch('video_tools.socket.create_connection'),patch('video_tools.ssl.create_default_context'):
    with self.assertRaises(VideoError):inspect_direct('https://example.com/v.mp4')
+
+class ExpiryRegistrationTests(unittest.TestCase):
+ setUp=VideoTests.setUp
+ def test_malformed_expiry_keeps_file_available_for_cleanup(self):
+  original=self.api.upload
+  def upload(*args):return dict(original(*args),expirationTime='invalid-upstream-time')
+  with patch.object(self.api,'upload',side_effect=upload):self.v.uploaded(self.path,self.info,threading.Event(),time.monotonic()+10)
+  self.assertEqual(self.state.db.execute('SELECT COUNT(*) FROM video_uploads').fetchone()[0],1)
+  self.assertEqual(self.v.cleanup(True),{'deleted':1,'failed':0})

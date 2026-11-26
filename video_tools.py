@@ -269,7 +269,12 @@ class VideoTools:
         if not re.fullmatch(r'files/[\w-]+',name):raise VideoError('Google 未返回有效的视频文件标识。')
         expires=time.time()+47*3600
         if saved.get('expirationTime'):
-            expires=datetime.datetime.fromisoformat(saved['expirationTime'].replace('Z','+00:00')).timestamp()
+            try:
+                expires=datetime.datetime.fromisoformat(saved['expirationTime'].replace('Z','+00:00')).timestamp()
+            except (ValueError,TypeError):
+                # Keep a conservative cache window if an upstream timestamp is malformed.
+                # The registered file is still checked before reuse and available for cleanup.
+                pass
         with self.state.lock:
             self.state.db.execute('INSERT OR REPLACE INTO video_uploads VALUES (?,?,?)',(key,json.dumps(saved),expires));self.state.db.commit()
         try:

@@ -31,4 +31,4 @@ It estimates **tokens at the dated Standard rates**. Search/Maps query charges, 
 
 Static video normally reads the selected sampled frames and audio. Agentic navigates on demand and may use additional thinking and tool tokens. Which costs less depends on the material and question. Select a short interval when the task is limited to that interval.
 
-Reusing a Files upload avoids sending the file again. It does not by itself establish a context-cache hit. Follow-ups send stored context; re-analyzing a new video interval creates another video call. The footer is an estimate alongside actual reported token counts; the Google bill remains the authoritative charge record.
+Reusing a Files upload avoids sending the file again. Returned cache-token counts determine whether cached-input pricing applies. Follow-ups send stored context; re-analyzing a new video interval creates another video call. The footer is an estimate alongside actual reported token counts; the Google bill remains the authoritative charge record.

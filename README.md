@@ -50,6 +50,8 @@ python3 -m venv .venv
 cp settings.example.json settings.json
 ```
 
+If macOS `python3` is older than 3.11, run `brew install python@3.14` and create the environment with `python3.14 -m venv .venv`. The service checks its interpreter version at startup.
+
 While this repository is private, clone with an account granted access, or use an owner-provided source archive. Keep the checkout in a permanent location: the login service uses its absolute path.
 
 For **local video files**, install ffmpeg, which provides the `ffprobe` container inspector:
@@ -98,7 +100,7 @@ Select **Gemini Neon (Adapter)** in AI Chat and enable the Raycast AI Extensions
 | Video detail | “Look again at 05:00–05:20 in the same video, using high detail to explain the chart.” |
 | Reuse context | “Use the material already analyzed to explain the second point. Cite it without rereading.” |
 
-Replace `YOUR_USER` and file names with your own **absolute paths**. The model may ask Raycast's Finder tool to locate a file you explicitly name. Local file tools accept paths or names supplied by the user, rather than instructions embedded in webpages or files.
+Replace `YOUR_USER` and file names with your own **absolute paths**. The model may ask Raycast's Finder tool to locate a file you explicitly name. Local file tools require a path or name in the user’s own messages.
 
 Video normally uses static processing: low resolution, 1 FPS, frames and audio. High detail uses high resolution and 2 FPS. A requested time range is sent as official processing offsets; local files are still uploaded in full. Explicitly requesting Agentic enables on-demand video navigation; this version uses static mode for time ranges. [Video and data details →](docs/DATA.md)
 
@@ -106,7 +108,7 @@ Video normally uses static processing: low resolution, 1 FPS, frames and audio. 
 
 Google's exact, uniquely matched support segments receive nearby citations. Other verified sources appear in a labelled list. Follow-ups select relevant historical source IDs instead of appending the whole chat's catalog. Files use their actual names; timestamps come from video analysis.
 
-Tool markers distinguish success, failure and partial results. A Raycast result is marked as returned unless its payload contains an explicit error. Search suggestions remain available after handoffs: chat shows their links, and **“official original display”** opens Google's original HTML/CSS on a temporary local page. Raycast's Markdown view displays links rather than embedding that widget.
+Tool markers distinguish success, failure and partial results. A Raycast result is marked as returned unless its payload contains an explicit error. Search suggestions remain available after handoffs: chat shows their links, and **“official original display”** opens Google's original HTML/CSS on a temporary local page. Raycast's Markdown view displays links; the original widget opens in its local page.
 
 ## Architecture
 
@@ -190,7 +192,7 @@ Token estimates aggregate main and child calls using the dated table in [COSTS.m
 | Tool context expired | Start a new chat and reload the named material; changed/truncated histories can prevent recovery |
 | File rejected | Use an absolute path or explicit name inside `allowed_roots`; check format/size and resolved symlink target |
 | Local video inspection failed | Run `ffprobe -version`; set an absolute executable path if needed |
-| Video URL failed | Use a public video-file URL rather than a player page; try a shorter range or permitted local file |
+| Video URL failed | Use a public video-file URL; try a shorter range or permitted local file |
 | “Failed to decode the response” | Verify `/health` reports version 2 and the provider points to this adapter; current error streams include the full completion envelope and readable cause |
 
 ## Development and license
