@@ -1,0 +1,57 @@
+# Before installation: merge this entry; preserve other providers.
+# Replace YOUR_GOOGLE_API_KEY locally.
+providers:
+  - id: gemini
+    name: Gemini
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai
+    api_keys:
+      google: YOUR_GOOGLE_API_KEY
+    models:
+      - id: gemini-4-carbon
+        name: Gemini Carbon (Adapter)
+        provider: google
+        description: Gemini native tools, video and follow-up context through the local adapter
+        context: 1000000
+        abilities:
+          temperature:
+            supported: true
+          vision:
+            supported: true
+          system_message:
+            supported: true
+          tools:
+            supported: true
+          reasoning_effort:
+            supported: true
+      - id: gemini-4-neon
+        name: Gemini Neon (Adapter)
+        provider: google
+        description: Gemini native tools, video and follow-up context through the local adapter
+        context: 1000000
+        abilities:
+          temperature:
+            supported: true
+          vision:
+            supported: true
+          system_message:
+            supported: true
+          tools:
+            supported: true
+          reasoning_effort:
+            supported: true
+      - id: gemini-4-hydrogen
+        name: Gemini Hydrogen (Adapter)
+        provider: google
+        description: Gemini native tools, video and follow-up context through the local adapter
+        context: 1000000
+        abilities:
+          temperature:
+            supported: true
+          vision:
+            supported: true
+          system_message:
+            supported: true
+          tools:
+            supported: true
+          reasoning_effort:
+            supported: true

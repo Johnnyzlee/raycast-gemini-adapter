@@ -1,0 +1,19 @@
+{
+  "port": 18767,
+  "timezone": "Asia/Hong_Kong",
+  "provider_id": "gemini",
+  "providers_file": "~/.config/raycast/ai/providers.yaml",
+  "allowed_roots": [
+    "~/Desktop",
+    "~/Documents",
+    "~/Downloads"
+  ],
+  "state_dir": "~/Library/Application Support/Gemini Raycast Adapter",
+  "service_label": "local.gemini.raycast.adapter",
+  "video_max_bytes": 268435456,
+  "video_max_duration": 10800,
+  "request_timeout_seconds": 600,
+  "ffprobe": "ffprobe",
+  "strict_file_authorization": true,
+  "show_usage_cost": true
+}

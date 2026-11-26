@@ -1,0 +1,86 @@
+# Gemini before installation, alongside an already-installed DeepSeek adapter.
+# Keep your own DeepSeek block; these are placeholders, not a replacement file.
+providers:
+  - id: gemini
+    name: Gemini
+    base_url: https://generativelanguage.googleapis.com/v1beta/openai
+    api_keys:
+      google: YOUR_GOOGLE_API_KEY
+    models:
+      - id: gemini-4-carbon
+        name: Gemini Carbon (Adapter)
+        provider: google
+        description: Gemini native tools, video and follow-up context through the local adapter
+        context: 1000000
+        abilities:
+          temperature:
+            supported: true
+          vision:
+            supported: true
+          system_message:
+            supported: true
+          tools:
+            supported: true
+          reasoning_effort:
+            supported: true
+      - id: gemini-4-neon
+        name: Gemini Neon (Adapter)
+        provider: google
+        description: Gemini native tools, video and follow-up context through the local adapter
+        context: 1000000
+        abilities:
+          temperature:
+            supported: true
+          vision:
+            supported: true
+          system_message:
+            supported: true
+          tools:
+            supported: true
+          reasoning_effort:
+            supported: true
+      - id: gemini-4-hydrogen
+        name: Gemini Hydrogen (Adapter)
+        provider: google
+        description: Gemini native tools, video and follow-up context through the local adapter
+        context: 1000000
+        abilities:
+          temperature:
+            supported: true
+          vision:
+            supported: true
+          system_message:
+            supported: true
+          tools:
+            supported: true
+          reasoning_effort:
+            supported: true
+  - id: deepseek
+    name: DeepSeek
+    base_url: http://127.0.0.1:18766
+    api_keys:
+      deepseek: YOUR_DEEPSEEK_API_KEY
+    additional_parameters:
+      thinking:
+        type: enabled
+      tool_choice: auto
+      tools:
+        - type: deepseek_web_search
+        - type: deepseek_read_url
+    models:
+      - id: deepseek-flash
+        name: DeepSeek Flash (Adapter)
+        provider: deepseek
+        description: DeepSeek Flash with native web tools and local file access via the adapter
+        context: 1000000
+        abilities:
+          temperature:
+            supported: true
+          vision:
+            supported: true
+          system_message:
+            supported: true
+          tools:
+            supported: true
+          reasoning_effort:
+            supported: true
